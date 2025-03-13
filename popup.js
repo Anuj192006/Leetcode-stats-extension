@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const mediumLabel = document.getElementById("medium-label");
     const hardLabel = document.getElementById("hard-label");
     const acceptanceLabel = document.getElementById("acceptance-label");
+    const totalLabel = document.getElementById("total-label");
 
     function checkusername(username) {
         const regex = /^[a-zA-Z0-9_-]{1,15}$/;
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 throw new Error("Unable to go to the server");
             }
             const data = await fetching.json();
+            console.log(data);
             return data;
         } catch (error) {
             alert(error);
@@ -44,10 +46,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (checkusername(username)) {
             const final_data = await fetchingleetcode(username);
             if (final_data) {
-                easyLabel.textContent = final_data.easySolved;
-                mediumLabel.textContent = final_data.mediumSolved;
-                hardLabel.textContent = final_data.hardSolved;
+                easyLabel.textContent = final_data.easySolved +"/"+final_data.totalEasy;
+                mediumLabel.textContent = final_data.mediumSolved+"/"+final_data.totalMedium;
+                hardLabel.textContent = final_data.hardSolved+"/"+final_data.totalHard;
                 acceptanceLabel.textContent = final_data.acceptanceRate;
+                totalLabel.textContent = final_data.easySolved+final_data.mediumSolved+final_data.hardSolved+"/"+final_data.totalQuestions;
             }
         }
     });
